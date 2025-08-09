@@ -1,0 +1,18 @@
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const authRoutes = require('./routes/auth');
+const villaRoutes = require('./routes/villas');
+const bookingRoutes = require('./routes/bookings');
+const paymentRoutes = require('./routes/payments');
+app.use(cors());
+app.use(bodyParser.json());
+app.use('/api/auth', authRoutes);
+app.use('/api/villas', villaRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/payments', paymentRoutes);
+app.get('/api/health', (req,res)=> res.json({ok:true}));
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, ()=> console.log('Server running on', PORT));
